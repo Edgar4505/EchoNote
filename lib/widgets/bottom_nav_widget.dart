@@ -1,37 +1,45 @@
 import 'package:flutter/material.dart';
 
-class BottomNavWidget extends StatelessWidget {
-  final int currentIndex;
-  final Function(int) onTap;
+class BottomNavWidget extends StatefulWidget {
+  @override
+  _BottomNavWidgetState createState() => _BottomNavWidgetState();
+}
 
-  BottomNavWidget({required this.currentIndex, required this.onTap});
+class _BottomNavWidgetState extends State<BottomNavWidget> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: onTap,
-      items: [
+      backgroundColor: Colors.black,
+      items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.mic, color: currentIndex == 0 ? Colors.white : Colors.grey),
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.radio),
           label: 'Live',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.history, color: currentIndex == 1 ? Colors.white : Colors.grey),
-          label: 'History',
+          icon: Icon(Icons.folder),
+          label: 'Sessions',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person, color: currentIndex == 2 ? Colors.white : Colors.grey),
-          label: 'Profile',
+          icon: Icon(Icons.settings),
+          label: 'Parameters',
         ),
       ],
-      backgroundColor: Colors.black,
+      currentIndex: _selectedIndex,
       selectedItemColor: Colors.white,
       unselectedItemColor: Colors.grey,
-      type: BottomNavigationBarType.fixed,
-      showUnselectedLabels: true,
-      selectedLabelStyle: TextStyle(color: Colors.white),
-      unselectedLabelStyle: TextStyle(color: Colors.grey),
+      onTap: _onItemTapped,
     );
   }
 }
